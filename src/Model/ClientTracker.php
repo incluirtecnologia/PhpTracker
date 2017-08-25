@@ -45,7 +45,7 @@ class ClientTracker extends AbstractTracker
     $this->userAgent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
     $this->remoteAddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
     $this->remotePort = filter_input(INPUT_SERVER, 'REMOTE_PORT');
-    $this->requestTime = filter_input(INPUT_SERVER, 'REQUEST_TIME');
+    $this->requestTime = microtime(true);
   }
 
   public function getIpAddress() {
