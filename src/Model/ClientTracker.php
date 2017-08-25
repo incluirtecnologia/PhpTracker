@@ -4,8 +4,6 @@
 namespace Intec\Tracker\Model;
 
 
-
-
 class ClientTracker extends AbstractTracker
 {
 
@@ -23,8 +21,9 @@ class ClientTracker extends AbstractTracker
 
   public function __construct()
   {
-    $this->ip = $this->getIpAddress(),
-    $this->serverName = filter_input(INPUT_SERVER, SERVER_NAME'SERVER_NAME');
+    $this->createConnection();
+    $this->ip = $this->getIpAddress();
+    $this->serverName = filter_input(INPUT_SERVER, 'SERVER_NAME');
     $this->serverPort = filter_input(INPUT_SERVER, 'SERVER_PORT');
     $this->serverRequestUri = filter_input(INPUT_SERVER, 'REQUEST_URI');
     $this->serverSoftware = filter_input(INPUT_SERVER, 'SERVER_SOFTWARE');
@@ -51,8 +50,8 @@ class ClientTracker extends AbstractTracker
   public function save()
   {
     try {
-      $this->conn->prepare('INSERT INTO client_info VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-      $this->conn->execute([
+      $stmt = $this->conn->prepare('INSERT INTO client_info VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+      $stmt->execute([
         $this->ip,
         $this->serverName,
         $this->serverPort,

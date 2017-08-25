@@ -13,8 +13,6 @@ use Intec\Tracker\Model\ClientTracker;
 class TrackerMiddleware
 {
 
-  const DB_HANDLER = 'TRACKER_HANDLER';
-
   /**
   * Used in routes to get information
   **/

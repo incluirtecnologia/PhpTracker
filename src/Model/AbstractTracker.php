@@ -7,17 +7,14 @@ namespace Intec\Tracker\Model;
 use PDO;
 use PDOException;
 
-class AbstractTracker
+abstract class AbstractTracker
 {
 
   protected $conn;
 
-  abstract function save()
-  {
+  abstract public function save();
 
-  }
-
-  protected function getConnection()
+  protected function createConnection()
   {
 
     try {
