@@ -10,7 +10,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "intec/simple-router": "dev-master"
+        "intec/simple-router": "dev-master",
+        "intec/session": "dev-master"
     },
 	  "autoload": {
         "psr-4": {"Intec\\Tracker\\": "src"}

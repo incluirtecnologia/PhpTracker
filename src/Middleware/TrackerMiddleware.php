@@ -27,7 +27,7 @@ class TrackerMiddleware
     $dTracker->log('Hello from TrackerMiddleware!');
   }
 
-  public static function userTracker($request, $sessionValues = [])
+  public static function userTracker($request)
   {
 
     $clientTracker = new ClientTracker();

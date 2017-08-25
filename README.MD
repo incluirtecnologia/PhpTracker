@@ -31,7 +31,9 @@ CREATE TABLE client_info (
     user_agent varchar(200) default null,
     remote_addr varchar(100) default null,
     remote_port varchar(100) default null,
-    request_time int default null
+    request_time varchar(20) default null,
+    tracker_session varchar(100) default null,
+    session_values varchar(300) default null
 );
 
 ```

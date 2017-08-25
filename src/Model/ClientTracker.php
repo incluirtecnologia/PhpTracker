@@ -4,6 +4,8 @@
 namespace Intec\Tracker\Model;
 
 
+use Intec\Session\Session;
+
 class ClientTracker extends AbstractTracker
 {
 
@@ -18,11 +20,22 @@ class ClientTracker extends AbstractTracker
   private $remoteAddr;
   private $remotePort;
   private $requestTime;
+  private $trackerSession;
+  private $sessionValues;
+
+  const DEFAULT_SESSION_KEY = 'tracker_session';
 
   public function __construct()
   {
+    $se = Session::getInstance();
+    if(!$se->exists(self::DEFAULT_SESSION_KEY)) {
+      $se->set(self::DEFAULT_SESSION_KEY, uniqid());
+    }
+
     $this->createConnection();
     $this->ip = $this->getIpAddress();
+    $this->trackerSession = $se->get(self::DEFAULT_SESSION_KEY);
+    $this->sessionValues = (string)$se;
     $this->serverName = filter_input(INPUT_SERVER, 'SERVER_NAME');
     $this->serverPort = filter_input(INPUT_SERVER, 'SERVER_PORT');
     $this->serverRequestUri = filter_input(INPUT_SERVER, 'REQUEST_URI');
@@ -50,7 +63,7 @@ class ClientTracker extends AbstractTracker
   public function save()
   {
     try {
-      $stmt = $this->conn->prepare('INSERT INTO client_info VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+      $stmt = $this->conn->prepare('INSERT INTO client_info VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
       $stmt->execute([
         $this->ip,
         $this->serverName,
@@ -63,6 +76,8 @@ class ClientTracker extends AbstractTracker
         $this->remoteAddr,
         $this->remotePort,
         $this->requestTime,
+        $this->trackerSession,
+        $this->sessionValues,
       ]);
     } catch(PDOException $e) {
       error_log($e->getMessage());

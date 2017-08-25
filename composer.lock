@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cefd271d8d97a2b50d41a94dcc9afa15",
+    "content-hash": "c77f349943b0aa4a431984fbc50057a7",
     "packages": [
         {
             "name": "intec/db-manager",
@@ -37,6 +37,38 @@
                 }
             ],
             "time": "2017-08-25 13:15:47"
+        },
+        {
+            "name": "intec/session",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/incluirtecnologia/PhpSession.git",
+                "reference": "7e6f6f3f2d26596a18cde693cd4d435bb98b74f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/incluirtecnologia/PhpSession/zipball/7e6f6f3f2d26596a18cde693cd4d435bb98b74f6",
+                "reference": "7e6f6f3f2d26596a18cde693cd4d435bb98b74f6",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Intec\\Session\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márcio Dias",
+                    "email": "marciojr91@gmail.com"
+                }
+            ],
+            "time": "2017-08-25 13:10:35"
         },
         {
             "name": "intec/simple-router",
@@ -87,7 +119,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "intec/simple-router": 20,
-        "intec/db-manager": 20
+        "intec/session": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
