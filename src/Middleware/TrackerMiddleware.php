@@ -8,8 +8,13 @@ use Intec\Tracker\Model\DummyTracker;
 use Intec\Tracker\Model\UriTracker;
 use Intec\Router\Request;
 
+use Intec\Tracker\Model\ClientTracker;
+
 class TrackerMiddleware
 {
+
+  const DB_HANDLER = 'TRACKER_HANDLER';
+
   /**
   * Used in routes to get information
   **/
@@ -27,45 +32,16 @@ class TrackerMiddleware
   public static function userTracker($request, $sessionValues = [])
   {
 
-    // uri params
-    $uriTracker = self::uriTracker();
-    $uriTracker->save();
+    $clientTracker = new ClientTracker();
+    $clientTracker->save();
 
-    // get params
-    // $getTracker = self::getTracker($request->getQueryParams());
-    //
-    // // post params
+    // post params
     // $postTracker = self::postTracker($request->getPostParams());
     //
-    // // session session
+    // session session
     // $sessionTracker = self::sessionTracker($sessionValues);
     //
-    // // client info: ip, user agent, ...
+    // client info: ip, user agent, ...
     // $clientTracker = self::clientTracker();
   }
-
-  private static function uriTracker()
-  {
-    return new UriTracker($_SERVER['REQUEST_URI']);
-  }
-
-  // private static function getTracker($get)
-  // {
-  //   return new GetTracker($post);
-  // }
-  //
-  // private static function postTracker($post)
-  // {
-  //   return new PostTracker($post);
-  // }
-  //
-  // private static function sessionTracker($sessionValues)
-  // {
-  //   return new SessionTracker($sessionValues);
-  // }
-
-  /**
-  * Other Trackers
-  * ...
-  **/
 }

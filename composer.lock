@@ -4,20 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5757d9752714a62ab61c4772def37116",
+    "content-hash": "cefd271d8d97a2b50d41a94dcc9afa15",
     "packages": [
+        {
+            "name": "intec/db-manager",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/incluirtecnologia/PhpDbManager.git",
+                "reference": "eca74a733af303dadd05a67b95e99d4b1a3313ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/incluirtecnologia/PhpDbManager/zipball/eca74a733af303dadd05a67b95e99d4b1a3313ba",
+                "reference": "eca74a733af303dadd05a67b95e99d4b1a3313ba",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Intec\\DbManager\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márcio Dias",
+                    "email": "marciojr91@gmail.com"
+                }
+            ],
+            "time": "2017-08-25 13:15:47"
+        },
         {
             "name": "intec/simple-router",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/incluirtecnologia/SimpleRouter.git",
-                "reference": "35caaa914c682803d158c79ba3a760474a49931b"
+                "reference": "7bc349f679e18d9d7a8160c300dc7c304daceade"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/incluirtecnologia/SimpleRouter/zipball/35caaa914c682803d158c79ba3a760474a49931b",
-                "reference": "35caaa914c682803d158c79ba3a760474a49931b",
+                "url": "https://api.github.com/repos/incluirtecnologia/SimpleRouter/zipball/7bc349f679e18d9d7a8160c300dc7c304daceade",
+                "reference": "7bc349f679e18d9d7a8160c300dc7c304daceade",
                 "shasum": ""
             },
             "require": {
@@ -47,14 +79,15 @@
                 "php",
                 "small router"
             ],
-            "time": "2017-08-23 17:31:44"
+            "time": "2017-08-24 14:41:06"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "intec/simple-router": 20
+        "intec/simple-router": 20,
+        "intec/db-manager": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
