@@ -35,3 +35,14 @@ CREATE TABLE client_info (
 );
 
 ```
+
+## Adicionar o middleware no *EntryPoint* do projeto. Ex:
+
+```.php
+
+// index.php
+// Rastreio de ações do usuário
+SimpleRouter::setDefaultMiddlewares([function($request) {
+    TrackerMiddleware::userTracker($request);
+}]);
+```
