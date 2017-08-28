@@ -45,7 +45,6 @@ class ClientTracker extends AbstractTracker
     $this->userAgent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
     $this->remoteAddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
     $this->remotePort = filter_input(INPUT_SERVER, 'REMOTE_PORT');
-    $this->requestTime = microtime(true);
   }
 
   public function getIpAddress() {
@@ -63,7 +62,7 @@ class ClientTracker extends AbstractTracker
   public function save()
   {
     try {
-      $stmt = $this->conn->prepare('INSERT INTO client_info VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+      $stmt = $this->conn->prepare('INSERT INTO client_info VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
       $stmt->execute([
         $this->ip,
         $this->serverName,
@@ -75,16 +74,20 @@ class ClientTracker extends AbstractTracker
         $this->userAgent,
         $this->remoteAddr,
         $this->remotePort,
-        $this->requestTime,
         $this->trackerSession,
         $this->sessionValues,
       ]);
+
+      return $this->conn->lastInsertId();
+
     } catch(PDOException $e) {
       error_log($e->getMessage());
       if($this->conn->inTransaction()) {
           $this->conn->rollBack();
       }
     }
+
+    return false;
   }
 
 }

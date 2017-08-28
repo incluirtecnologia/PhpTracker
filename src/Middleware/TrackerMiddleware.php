@@ -27,11 +27,15 @@ class TrackerMiddleware
     $dTracker->log('Hello from TrackerMiddleware!');
   }
 
-  public static function userTracker($request)
+  public static function userTracker(Request $request)
   {
 
     $clientTracker = new ClientTracker();
-    $clientTracker->save();
+    $id = $clientTracker->save();
+    if($id) {
+      $adwordsTracker = new GoogleAdwordsTracker($id, $request->getQueryParams());
+      $adwordsTracker->save();
+    }
 
     // post params
     // $postTracker = self::postTracker($request->getPostParams());

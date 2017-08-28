@@ -31,9 +31,28 @@ CREATE TABLE client_info (
     user_agent varchar(200) default null,
     remote_addr varchar(100) default null,
     remote_port varchar(100) default null,
-    request_time varchar(20) default null,
     tracker_session varchar(100) default null,
-    session_values varchar(300) default null
+    session_values varchar(300) default null,
+    reg_date timestamp not null default CURRENT_TIMESTAMP
+);
+
+CREATE TABLE adwords (
+	id int auto_increment primary key,
+	client_info_id int not null,
+  campaignid varchar(255) default null,
+  adgroupid varchar(255) default null,
+  feeditemid varchar(255) default null,
+  targetid varchar(255) default null,
+  loc_physical_ms varchar(255) default null,
+  matchtype varchar(255) default null,
+  network varchar(255) default null,
+  device varchar(255) default null,
+  devicemodel varchar(255) default null,
+  keyword varchar(255) default null,
+  placement varchar(255) default null,
+  adposition varchar(255) default null,
+	reg_date timestamp not null default CURRENT_TIMESTAMP,
+	foreign key (client_info_id) references client_info(id)
 );
 
 ```
