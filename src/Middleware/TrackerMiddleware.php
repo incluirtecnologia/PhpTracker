@@ -38,13 +38,5 @@ class TrackerMiddleware
       $adwordsTracker->save();
     }
 
-    // post params
-    // $postTracker = self::postTracker($request->getPostParams());
-    //
-    // session session
-    // $sessionTracker = self::sessionTracker($sessionValues);
-    //
-    // client info: ip, user agent, ...
-    // $clientTracker = self::clientTracker();
   }
 }
