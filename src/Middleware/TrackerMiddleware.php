@@ -9,6 +9,7 @@ use Intec\Tracker\Model\UriTracker;
 use Intec\Router\Request;
 
 use Intec\Tracker\Model\ClientTracker;
+use Intec\Tracker\Model\GoogleAdwordsTracker;
 
 class TrackerMiddleware
 {
