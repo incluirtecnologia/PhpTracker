@@ -8,7 +8,7 @@ use Intec\Tracker\Model\DummyTracker;
 use Intec\Router\Request;
 use Intec\Session\Session;
 
-class TracerController
+class TrackerController
 {
   public static function dummyTracker()
   {
