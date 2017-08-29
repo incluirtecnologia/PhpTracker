@@ -19,9 +19,6 @@ class TrackerController
   public static function mouseMoveTracker(Request $request)
   {
     $params = $request->getPostParams();
-    // if() {
-    //
-    // }
     $mTracker = new MouseMoveTracker($params['x'], $params['y'], $params['element']);
     $mTracker->save();
   }
