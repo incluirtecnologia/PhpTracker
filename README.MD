@@ -62,7 +62,8 @@ create table mouse_move (
 	element varchar(300) not null,
   screen varchar(100) default null,
   height int default null,
-  width int default null
+  width int default null,
+  pathname varchar(300) default null
 );
 
 ```

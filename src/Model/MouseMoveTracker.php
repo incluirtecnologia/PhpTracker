@@ -16,8 +16,9 @@ class MouseMoveTracker extends AbstractTracker
   private $screen;
   private $width;
   private $height;
+  private $pathname;
 
-  public function __construct($xPosition, $yPosition, $element, $screen, $width, $height)
+  public function __construct($xPosition, $yPosition, $element, $screen, $width, $height, $pathname)
   {
 
     $this->createConnection();
@@ -29,6 +30,7 @@ class MouseMoveTracker extends AbstractTracker
     $this->screen = $screen;
     $this->width = $width;
     $this->height = $height;
+    $this->pathname = $pathname;
   }
 
 
@@ -38,7 +40,7 @@ class MouseMoveTracker extends AbstractTracker
     try {
 
       $stmt = $this->conn->prepare('INSERT INTO mouse_move (client_info_id, x,
-          y, element, screen, width, height) values(?, ?, ?, ?, ?, ?, ?)');
+          y, element, screen, width, height, pathname) values(?, ?, ?, ?, ?, ?, ?, ?)');
       $stmt->execute([
         $this->client_info_id,
         $this->x,
@@ -46,7 +48,8 @@ class MouseMoveTracker extends AbstractTracker
         $this->element,
         $this->screen,
         $this->width,
-        $this->height
+        $this->height,
+        $this->pathname
       ]);
 
       return $this->conn->lastInsertId();
