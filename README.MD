@@ -20,7 +20,7 @@ putenv('DB_TRACKER_CHARSET=utf8mb4');
 
 ```.sql
 CREATE TABLE client_info (
-    id int auto_increment primary key,
+    id varchar(100) primary key,
     ip varchar(30) default null,
     server_name varchar(100) default null,
     server_port int default null,
@@ -31,14 +31,13 @@ CREATE TABLE client_info (
     user_agent varchar(200) default null,
     remote_addr varchar(100) default null,
     remote_port varchar(100) default null,
-    tracker_session varchar(100) default null,
     session_values varchar(300) default null,
     reg_date timestamp not null default CURRENT_TIMESTAMP
 );
 
 CREATE TABLE adwords (
 	id int auto_increment primary key,
-	client_info_id int not null,
+	client_info_id varchar(100) not null,
   campaignid varchar(255) default null,
   adgroupid varchar(255) default null,
   feeditemid varchar(255) default null,
@@ -55,6 +54,15 @@ CREATE TABLE adwords (
 	foreign key (client_info_id) references client_info(id)
 );
 
+create table mouse_move (
+	id int auto_increment primary key,
+	client_info_id varchar(100) not null,
+	x int not null,
+	y int not null,
+	element varchar(300) not null,
+	foreign key (client_info_id) references client_info(id)
+);
+
 ```
 
 ## Adicionar o middleware no *EntryPoint* do projeto. Ex:
@@ -66,4 +74,16 @@ CREATE TABLE adwords (
 SimpleRouter::setDefaultMiddlewares([function($request) {
     TrackerMiddleware::userTracker($request);
 }]);
+```
+
+## (Para rastreio do mouse) Adicionar uma rota para o controller TrackerController
+```.php
+// routes.php
+// Rastreio do mouse do usuário
+[
+    'pattern' => '/tracker/mouse',
+    'callback' => function($request) {
+        \Intec\Tracker\Controller\TrackerController::mouseMoveTracker($request);
+    }
+]
 ```
