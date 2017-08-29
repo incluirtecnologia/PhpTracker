@@ -5,6 +5,7 @@ namespace Intec\Tracker\Controller;
 
 
 use Intec\Tracker\Model\DummyTracker;
+use Intec\Tracker\Model\MouseMoveTracker;
 use Intec\Router\Request;
 use Intec\Session\Session;
 
