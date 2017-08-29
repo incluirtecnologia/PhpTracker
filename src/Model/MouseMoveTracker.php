@@ -4,6 +4,8 @@
 namespace Intec\Tracker\Model;
 
 
+use Intec\Session\Session;
+
 class MouseMoveTracker extends AbstractTracker
 {
 
@@ -12,11 +14,12 @@ class MouseMoveTracker extends AbstractTracker
   private $y;
   private $element;
 
-  public function __construct($id, $xPosition, $yPosition, $element)
+  public function __construct($xPosition, $yPosition, $element)
   {
 
     $this->createConnection();
-    $this->client_info_id = $id;
+    $se = Session::getInstance();
+    $this->client_info_id = $se->get(self::DEFAULT_SESSION_KEY);
     $this->x = $xPosition;
     $this->y = $yPosition;
     $this->element = $element;

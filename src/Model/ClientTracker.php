@@ -32,7 +32,7 @@ class ClientTracker extends AbstractTracker
     }
 
     $this->createConnection();
-    $this->id = $se->get(self::DEFAULT_SESSION_KEY);
+    $this->session_id = $se->get(self::DEFAULT_SESSION_KEY);
     $this->ip = $this->getIpAddress();
     $this->sessionValues = (string)$se;
     $this->serverName = filter_input(INPUT_SERVER, 'SERVER_NAME');
@@ -62,12 +62,12 @@ class ClientTracker extends AbstractTracker
   {
     try {
       $stmt = $this->conn->prepare('INSERT INTO client_info
-    (id, ip, server_name, server_port, server_request_uri, server_software,
+    (session_id, ip, server_name, server_port, server_request_uri, server_software,
     request_method, http_cookie, user_agent, remote_addr, remote_port,
      session_values) VALUES(?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?, ?)');
       $stmt->execute([
-        $this->id,
+        $this->session_id,
         $this->ip,
         $this->serverName,
         $this->serverPort,
@@ -81,7 +81,7 @@ class ClientTracker extends AbstractTracker
         $this->sessionValues,
       ]);
 
-      return $this->id;
+      return $this->session_id;
 
     } catch(PDOException $e) {
       error_log($e->getMessage());

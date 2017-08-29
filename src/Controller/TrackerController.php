@@ -22,7 +22,7 @@ class TracerController
     // if() {
     //
     // }
-    $mTracker = new MouseMoveTracker(  $params['x'], $params['y'], $params['element']);
+    $mTracker = new MouseMoveTracker($params['x'], $params['y'], $params['element']);
     $mTracker->save();
   }
 }

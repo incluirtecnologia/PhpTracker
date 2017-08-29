@@ -20,7 +20,8 @@ putenv('DB_TRACKER_CHARSET=utf8mb4');
 
 ```.sql
 CREATE TABLE client_info (
-    id varchar(100) primary key,
+    id int auto_increment primary key,
+    session_id varchar(100) not null,
     ip varchar(30) default null,
     server_name varchar(100) default null,
     server_port int default null,
@@ -50,8 +51,7 @@ CREATE TABLE adwords (
   keyword varchar(255) default null,
   placement varchar(255) default null,
   adposition varchar(255) default null,
-	reg_date timestamp not null default CURRENT_TIMESTAMP,
-	foreign key (client_info_id) references client_info(id)
+	reg_date timestamp not null default CURRENT_TIMESTAMP
 );
 
 create table mouse_move (
@@ -59,8 +59,7 @@ create table mouse_move (
 	client_info_id varchar(100) not null,
 	x int not null,
 	y int not null,
-	element varchar(300) not null,
-	foreign key (client_info_id) references client_info(id)
+	element varchar(300) not null
 );
 
 ```
