@@ -64,7 +64,7 @@ class ClientTracker extends AbstractTracker
       $stmt = $this->conn->prepare('INSERT INTO client_info
     (id, ip, server_name, server_port, server_request_uri, server_software,
     request_method, http_cookie, user_agent, remote_addr, remote_port,
-    tracker_session, session_values) VALUES(?, ?, ?, ?, ?, ?,
+     session_values) VALUES(?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?, ?)');
       $stmt->execute([
         $this->id,
