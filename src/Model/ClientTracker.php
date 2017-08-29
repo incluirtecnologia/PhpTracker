@@ -32,7 +32,7 @@ class ClientTracker extends AbstractTracker
     }
 
     $this->createConnection();
-    $this->id = $se->get(self::DEFAULT_SESSION_KEY);|
+    $this->id = $se->get(self::DEFAULT_SESSION_KEY);
     $this->ip = $this->getIpAddress();
     $this->sessionValues = (string)$se;
     $this->serverName = filter_input(INPUT_SERVER, 'SERVER_NAME');
