@@ -59,7 +59,10 @@ create table mouse_move (
 	client_info_id varchar(100) not null,
 	x int not null,
 	y int not null,
-	element varchar(300) not null
+	element varchar(300) not null,
+  screen varchar(100) default null,
+  height int default null,
+  width int default null
 );
 
 ```
