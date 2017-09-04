@@ -39,7 +39,7 @@ class MouseMoveTracker extends AbstractTracker
 
     try {
 
-      $stmt = $this->conn->prepare('INSERT INTO mouse_move (client_info_id, x,
+      $stmt = $this->conn->prepare('INSERT INTO mouse_move (session_id, x,
           y, element, screen, width, height, pathname) values(?, ?, ?, ?, ?, ?, ?, ?)');
       $stmt->execute([
         $this->client_info_id,

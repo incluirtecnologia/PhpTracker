@@ -38,32 +38,32 @@ CREATE TABLE client_info (
 
 CREATE TABLE adwords (
 	id int auto_increment primary key,
-	client_info_id varchar(100) not null,
-  campaignid varchar(255) default null,
-  adgroupid varchar(255) default null,
-  feeditemid varchar(255) default null,
-  targetid varchar(255) default null,
-  loc_physical_ms varchar(255) default null,
-  matchtype varchar(255) default null,
-  network varchar(255) default null,
-  device varchar(255) default null,
-  devicemodel varchar(255) default null,
-  keyword varchar(255) default null,
-  placement varchar(255) default null,
-  adposition varchar(255) default null,
-	reg_date timestamp not null default CURRENT_TIMESTAMP
+    session_id varchar(100) not null,
+    campaignid varchar(255) default null,
+    adgroupid varchar(255) default null,
+    feeditemid varchar(255) default null,
+    targetid varchar(255) default null,
+    loc_physical_ms varchar(255) default null,
+    matchtype varchar(255) default null,
+    network varchar(255) default null,
+    device varchar(255) default null,
+    devicemodel varchar(255) default null,
+    keyword varchar(255) default null,
+    placement varchar(255) default null,
+    adposition varchar(255) default null,
+    reg_date timestamp not null default CURRENT_TIMESTAMP
 );
 
 create table mouse_move (
 	id int auto_increment primary key,
-	client_info_id varchar(100) not null,
+	session_id varchar(100) not null,
 	x int not null,
 	y int not null,
 	element varchar(300) not null,
-  screen varchar(100) default null,
-  height int default null,
-  width int default null,
-  pathname varchar(300) default null
+    screen varchar(100) default null,
+    height int default null,
+    width int default null,
+    pathname varchar(300) default null
 );
 
 ```

@@ -57,7 +57,7 @@ class GoogleAdwordsTracker extends AbstractTracker
     try {
 
       $stmt = $this->conn->prepare('INSERT INTO adwords
-        (client_info_id, campaignid, adgroupid, feeditemid, targetid,
+        (session_id, campaignid, adgroupid, feeditemid, targetid,
           loc_physical_ms, matchtype, network, device, devicemodel, keyword,
           placement, adposition)
         VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)');
