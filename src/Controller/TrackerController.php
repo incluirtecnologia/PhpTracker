@@ -23,7 +23,7 @@ class TrackerController
 
     $mTracker = new MouseMoveTracker($params['x'], $params['y'],
       $params['element'], $params['screen'], $params['height'],
-      $params['width'], $params['pathname']);
+      $params['width'], $params['pathname'], $params['contentId']);
 
     $mTracker->save();
   }
