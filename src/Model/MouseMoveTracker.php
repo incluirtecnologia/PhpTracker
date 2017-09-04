@@ -34,7 +34,6 @@ class MouseMoveTracker extends AbstractTracker
     $this->contentId = $contentId;
   }
 
-
   public function save()
   {
 
@@ -64,8 +63,14 @@ class MouseMoveTracker extends AbstractTracker
     }
 
     return false;
+  }
 
-
+  public static function getPages($serverName)
+  {
+    $conn = DbConnection::createDbConnection();
+    $params = $request->getPostParams();
+    $stmt = $conn->query('select mm.* from mouse_move mm join client_info ci on ci.session_id = mm.session_id whereci.server_name ="'.$params['serverName'].'"');
+    return $stmt->fetchAll();
   }
 
 

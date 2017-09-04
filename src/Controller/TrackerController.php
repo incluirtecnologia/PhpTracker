@@ -27,4 +27,10 @@ class TrackerController
 
     $mTracker->save();
   }
+
+  public static function getPages(Request $request)
+  {
+    $pages = MouseMoveTracker::getPages($request->getQueryParams()['serverName']);
+    echo json_encode($pages);
+  }
 }
