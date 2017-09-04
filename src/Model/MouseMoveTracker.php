@@ -68,7 +68,7 @@ class MouseMoveTracker extends AbstractTracker
   public static function getPages($serverName)
   {
     $conn = DbConnection::createDbConnection();
-    $stmt = $conn->query("select mm.* from mouse_move mm join client_info ci on ci.session_id = mm.session_id whereci.server_name='$serverName'");
+    $stmt = $conn->query("select mm.* from mouse_move mm join client_info ci on ci.session_id = mm.session_id where ci.server_name='$serverName'");
     return $stmt->fetchAll();
   }
 
