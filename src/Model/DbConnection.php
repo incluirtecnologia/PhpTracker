@@ -1,7 +1,8 @@
 <?php
 
 
-namespace Intec\Model;
+namespace Intec\Tracker\Model;
+
 
 class DbConnection
 {
