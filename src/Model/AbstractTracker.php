@@ -4,9 +4,6 @@
 namespace Intec\Tracker\Model;
 
 
-use PDO;
-use PDOException;
-
 abstract class AbstractTracker
 {
 

@@ -67,6 +67,11 @@ create table mouse_move (
     contentId varchar(300) default null
 );
 
+create table servers(
+  id auto_increment primary key,
+  server_name varchar(300) default null
+);
+
 ```
 
 ## Adicionar o middleware no *EntryPoint* do projeto. Ex:
