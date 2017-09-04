@@ -16,11 +16,6 @@ abstract class AbstractTracker
 
   protected function createConnection()
   {
-
-    try {
-      $this->conn = DbConnection::createDbConnection();
-    } catch(PDOException $e) {
-      error_log($e->getMessage());
-    }
+    $this->conn = DbConnection::createDbConnection();
   }
 }

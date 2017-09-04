@@ -4,6 +4,9 @@
 namespace Intec\Tracker\Model;
 
 
+use PDO;
+use PDOException;
+
 class DbConnection
 {
 
