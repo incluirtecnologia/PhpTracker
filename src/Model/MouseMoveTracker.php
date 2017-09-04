@@ -70,7 +70,7 @@ class MouseMoveTracker extends AbstractTracker
     $conn = DbConnection::createDbConnection();
     $stmt = $conn->query("select m.* from mouse_move m join client_info c
     on c.session_id = m.session_id where c.server_name='$serverName'
-    group by (m.id)");
+    group by m.pathname");
     return $stmt->fetchAll();
   }
 
