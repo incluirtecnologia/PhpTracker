@@ -4,6 +4,9 @@
 namespace Intec\Tracker\Model;
 
 
+use Intec\Tracker\Controller\TrackerController;
+
+
 class TrackerRouteContainer
 {
 
