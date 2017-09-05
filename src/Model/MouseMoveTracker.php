@@ -74,5 +74,12 @@ class MouseMoveTracker extends AbstractTracker
     return $stmt->fetchAll();
   }
 
+  public static function getPageVersions($page)
+  {
+    $conn = DbConnection::createDbConnection();
+    $stmt = $conn->query("select m.* from mouse_move m where m.pathname='$page'
+    group by m.contentId");
+    return $stmt->fetchAll();
+  }
 
 }

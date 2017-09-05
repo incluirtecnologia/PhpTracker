@@ -67,11 +67,6 @@ create table mouse_move (
     contentId varchar(300) default null
 );
 
-create table servers(
-  id auto_increment primary key,
-  server_name varchar(300) default null
-);
-
 ```
 
 ## Adicionar o middleware no *EntryPoint* do projeto. Ex:
@@ -85,14 +80,8 @@ SimpleRouter::setDefaultMiddlewares([function($request) {
 }]);
 ```
 
-## (Para rastreio do mouse) Adicionar uma rota para o controller TrackerController
+## Rotas específicas (rastreio do mouse e heatmap)
 ```.php
-// routes.php
-// Rastreio do mouse do usuário
-[
-    'pattern' => '/tracker/mouse',
-    'callback' => function($request) {
-        \Intec\Tracker\Controller\TrackerController::mouseMoveTracker($request);
-    }
-]
+// index.php
+
 ```
