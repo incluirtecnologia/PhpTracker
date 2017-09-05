@@ -30,7 +30,8 @@ class TrackerController
 
   public static function getPages(Request $request)
   {
-    $pages = MouseMoveTracker::getPages($request->getQueryParams()['serverName']);
+    $params = $request->getQueryParams();
+    $pages = MouseMoveTracker::getPages($params['serverName'], $params['screenSize']);
     echo json_encode($pages);
   }
 

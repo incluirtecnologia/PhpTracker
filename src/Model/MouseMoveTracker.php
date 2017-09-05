@@ -65,12 +65,36 @@ class MouseMoveTracker extends AbstractTracker
     return false;
   }
 
-  public static function getPages($serverName)
+  public static function getPages($serverName, $screenSize)
   {
     $conn = DbConnection::createDbConnection();
-    $stmt = $conn->query("select m.* from mouse_move m join client_info c
+
+
+    $testScreenSize = "";
+
+    switch($screenSize) {
+      case Screen::SIZE_EXTRA_SMALL:
+        $testScreenSize = " and m.width < " . Screen::SCREEN_SM_MIN;
+        break;
+      case Screen::SIZE_SMALL:
+        $testScreenSize = " and m.width > " . Screen::SCREEN_XS_MAX .
+        " and .width < " . SCREEN_MD_MIN;
+        break;
+      case Screen::SIZE_MEDIUM:
+      $testScreenSize = " and m.width > " . Screen::SCREEN_SM_MAX .
+      " and .width < " . SCREEN_LG_MIN;
+        break;
+      case Screen::SIZE_LARGE:
+      $testScreenSize = " and m.width > " . Screen::SCREEN_MD_MAX;
+        break;
+      default:
+        throw new \InvalidArgumentException('Valor inválido para screenSize');
+    }
+    $sql = "select m.* from mouse_move m join client_info c
     on c.session_id = m.session_id where c.server_name='$serverName'
-    group by m.pathname");
+    $testScreenSize
+    group by m.pathname";
+    $stmt = $conn->query($sql);
     return $stmt->fetchAll();
   }
 

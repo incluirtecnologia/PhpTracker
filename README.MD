@@ -55,11 +55,11 @@ CREATE TABLE adwords (
 );
 
 create table mouse_move (
-	id int auto_increment primary key,
-	session_id varchar(100) not null,
-	x int not null,
-	y int not null,
-	element varchar(300) not null,
+  	id int auto_increment primary key,
+  	session_id varchar(100) not null,
+  	x int not null,
+  	y int not null,
+  	element varchar(300) not null,
     screen varchar(100) default null,
     height int default null,
     width int default null,
