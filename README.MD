@@ -72,7 +72,6 @@ create table mouse_move (
 ## Adicionar o middleware no *EntryPoint* do projeto. Ex:
 
 ```.php
-
 // index.php
 // Rastreio de ações do usuário
 SimpleRouter::setDefaultMiddlewares([function($request) {
@@ -83,5 +82,6 @@ SimpleRouter::setDefaultMiddlewares([function($request) {
 ## Rotas específicas (rastreio do mouse e heatmap)
 ```.php
 // index.php
-
+// Rotas do Tracker, adicione após o método SimpleRouter::setRoutes
+SimpleRouter::addRoutes(TrackerRouteContainer::getRoutes());
 ```
