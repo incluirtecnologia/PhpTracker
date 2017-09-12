@@ -90,7 +90,7 @@ class MouseMoveTracker extends AbstractTracker
       default:
         throw new \InvalidArgumentException('Valor inválido para screenSize');
     }
-    $sql = "select m.height, m.width, m.x, m.y from mouse_move m join client_info c
+    $sql = "select m.height, m.width, m.x, m.y, m.pathname from mouse_move m join client_info c
     on c.session_id = m.session_id where c.server_name='$serverName'
     $testScreenSize
     group by m.pathname";
