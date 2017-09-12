@@ -78,11 +78,11 @@ class MouseMoveTracker extends AbstractTracker
         break;
       case Screen::SIZE_SMALL:
         $testScreenSize = " and m.width > " . Screen::SCREEN_XS_MAX .
-        " and .width < " . SCREEN_MD_MIN;
+        " and m.width < " . SCREEN_MD_MIN;
         break;
       case Screen::SIZE_MEDIUM:
       $testScreenSize = " and m.width > " . Screen::SCREEN_SM_MAX .
-      " and .width < " . SCREEN_LG_MIN;
+      " and m.width < " . SCREEN_LG_MIN;
         break;
       case Screen::SIZE_LARGE:
       $testScreenSize = " and m.width > " . Screen::SCREEN_MD_MAX;
