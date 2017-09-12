@@ -78,11 +78,11 @@ class MouseMoveTracker extends AbstractTracker
         break;
       case Screen::SIZE_SMALL:
         $testScreenSize = " and m.width > " . Screen::SCREEN_XS_MAX .
-        " and m.width < " . SCREEN_MD_MIN;
+        " and m.width < " . Screen::SCREEN_MD_MIN;
         break;
       case Screen::SIZE_MEDIUM:
       $testScreenSize = " and m.width > " . Screen::SCREEN_SM_MAX .
-      " and m.width < " . SCREEN_LG_MIN;
+      " and m.width < " . Screen::SCREEN_LG_MIN;
         break;
       case Screen::SIZE_LARGE:
       $testScreenSize = " and m.width > " . Screen::SCREEN_MD_MAX;
@@ -90,7 +90,7 @@ class MouseMoveTracker extends AbstractTracker
       default:
         throw new \InvalidArgumentException('Valor inválido para screenSize');
     }
-    $sql = "select m.* from mouse_move m join client_info c
+    $sql = "select m.height, m.width, m.x, m.y from mouse_move m join client_info c
     on c.session_id = m.session_id where c.server_name='$serverName'
     $testScreenSize
     group by m.pathname";
