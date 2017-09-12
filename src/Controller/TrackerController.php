@@ -41,4 +41,18 @@ class TrackerController
     echo json_encode($pages);
   }
 
+  public static function getMouseMoveData(Request $req)
+  {
+    $params = $req->getQueryParams();
+    $data = [];
+    $ver = $params['pageVersion'];
+    if($params['endDate']) {
+      $data = MouseMoveTracker::getMouseMoveData($ver, $params['startDate'], $params['endDate']);
+    } else {
+      $data = MouseMoveTracker::getMouseMoveData($ver, $params['startDate']);
+    }
+
+    echo json_encode($data);
+  }
+
 }

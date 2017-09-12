@@ -34,6 +34,12 @@ class TrackerRouteContainer
           'callback' => function($request) {
               TrackerController::getPageVersions($request);
           }
+        ],
+        [
+          'pattern' => '/tracker/getMouseMoveData',
+          'callback' => function($request) {
+              TrackerController::getPageVersions($request);
+          }
         ]
     ];
   }

@@ -64,7 +64,8 @@ create table mouse_move (
     height int default null,
     width int default null,
     pathname varchar(300) default null,
-    contentId varchar(300) default null
+    contentId varchar(300) default null,
+    reg_date timestamp not null default CURRENT_TIMESTAMP
 );
 
 ```
