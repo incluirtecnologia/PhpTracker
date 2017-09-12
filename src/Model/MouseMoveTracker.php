@@ -112,13 +112,13 @@ class MouseMoveTracker extends AbstractTracker
 
     $dateTest = '';
     if(!$endDate) {
-      $dateTest = " and reg_date >= '$startDate'";
+      $dateTest = " and reg_date >= '$startDate 00:00:00'";
     } else {
-      $dateTest = " and reg_date between '$startDate' and '$endDate'";
+      $dateTest = " and reg_date between '$startDate 00:00:00' and '$endDate 23:59:59'";
     }
 
     $stmt = $conn->query("select m.x, m.y, m.width, m.height from mouse_move
-    m where m.contentId='$pageVersion' $dateTest group by m.contentId");
+    m where m.contentId='$pageVersion' $dateTest");
     return $stmt->fetchAll();
   }
 
