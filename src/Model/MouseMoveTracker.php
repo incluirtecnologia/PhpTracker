@@ -113,7 +113,7 @@ class MouseMoveTracker extends AbstractTracker
     return $stmt->fetchAll();
   }
 
-  public static function getMouseMoveData($pageVersion, $screenSize, $startDate, $endDate = null)
+  public static function getMouseMoveData($serverName, $pageVersion, $screenSize, $startDate, $endDate = null)
   {
     $conn = DbConnection::createDbConnection();
 
@@ -127,7 +127,8 @@ class MouseMoveTracker extends AbstractTracker
     $testScreenSize = self::getTestScreenSize($screenSize);
 
     $stmt = $conn->query("select m.x, m.y, m.width, m.height from mouse_move
-    m where m.contentId='$pageVersion' $dateTest $testScreenSize");
+    join client_info c on c.session_id = m.session_id
+    m where c.server_name='$serverName' and m.contentId='$pageVersion' $dateTest $testScreenSize");
     return $stmt->fetchAll();
   }
 
