@@ -45,11 +45,10 @@ class TrackerController
   {
     $params = $req->getQueryParams();
     $data = [];
-    $ver = $params['pageVersion'];
     if($params['endDate']) {
-      $data = MouseMoveTracker::getMouseMoveData($ver, $params['startDate'], $params['endDate']);
+      $data = MouseMoveTracker::getMouseMoveData($params['pageVersion'], $params['screenSize'],  $params['startDate'], $params['endDate']);
     } else {
-      $data = MouseMoveTracker::getMouseMoveData($ver, $params['startDate']);
+      $data = MouseMoveTracker::getMouseMoveData($params['pageVersion'], $params['screenSize'], $params['startDate']);
     }
 
     echo json_encode($data);

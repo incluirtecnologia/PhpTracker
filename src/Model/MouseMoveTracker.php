@@ -70,8 +70,19 @@ class MouseMoveTracker extends AbstractTracker
     $conn = DbConnection::createDbConnection();
 
 
-    $testScreenSize = "";
+    $testScreenSize = self::getTestScreenSize($screenSize);
 
+    $sql = "select m.pathname from mouse_move m join client_info c
+    on c.session_id = m.session_id where c.server_name='$serverName'
+    $testScreenSize
+    group by m.pathname";
+    $stmt = $conn->query($sql);
+    return $stmt->fetchAll();
+  }
+
+  private static function getTestScreenSize($screenSize)
+  {
+    $testScreenSize = '';
     switch($screenSize) {
       case Screen::SIZE_EXTRA_SMALL:
         $testScreenSize = " and m.width < " . Screen::SCREEN_SM_MIN;
@@ -90,12 +101,8 @@ class MouseMoveTracker extends AbstractTracker
       default:
         throw new \InvalidArgumentException('Valor inválido para screenSize');
     }
-    $sql = "select m.pathname from mouse_move m join client_info c
-    on c.session_id = m.session_id where c.server_name='$serverName'
-    $testScreenSize
-    group by m.pathname";
-    $stmt = $conn->query($sql);
-    return $stmt->fetchAll();
+
+    return $testScreenSize;
   }
 
   public static function getPageVersions($page)
@@ -106,7 +113,7 @@ class MouseMoveTracker extends AbstractTracker
     return $stmt->fetchAll();
   }
 
-  public static function getMouseMoveData($pageVersion, $startDate, $endDate = null)
+  public static function getMouseMoveData($pageVersion, $screenSize, $startDate, $endDate = null)
   {
     $conn = DbConnection::createDbConnection();
 
@@ -117,8 +124,10 @@ class MouseMoveTracker extends AbstractTracker
       $dateTest = " and reg_date between '$startDate 00:00:00' and '$endDate 23:59:59'";
     }
 
+    $testScreenSize = self::getTestScreenSize($screenSize);
+
     $stmt = $conn->query("select m.x, m.y, m.width, m.height from mouse_move
-    m where m.contentId='$pageVersion' $dateTest");
+    m where m.contentId='$pageVersion' $dateTest $testScreenSize");
     return $stmt->fetchAll();
   }
 
