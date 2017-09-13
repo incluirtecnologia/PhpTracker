@@ -119,16 +119,17 @@ class MouseMoveTracker extends AbstractTracker
 
     $dateTest = '';
     if(!$endDate) {
-      $dateTest = " and reg_date >= '$startDate 00:00:00'";
+      $dateTest = " and m.reg_date >= '$startDate 00:00:00'";
     } else {
-      $dateTest = " and reg_date between '$startDate 00:00:00' and '$endDate 23:59:59'";
+      $dateTest = " and m.reg_date between '$startDate 00:00:00' and '$endDate 23:59:59'";
     }
 
     $testScreenSize = self::getTestScreenSize($screenSize);
 
-    $stmt = $conn->query("select m.x, m.y, m.width, m.height from mouse_move
+    $sql = "select m.x, m.y, m.width, m.height from mouse_move m
     join client_info c on c.session_id = m.session_id
-    m where c.server_name='$serverName' and m.contentId='$pageVersion' $dateTest $testScreenSize");
+     where c.server_name='$serverName' and m.contentId='$pageVersion' $dateTest $testScreenSize group by m.id";
+    $stmt = $conn->query($sql);
     return $stmt->fetchAll();
   }
 
