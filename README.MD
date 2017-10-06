@@ -28,7 +28,7 @@ CREATE TABLE client_info (
     server_request_uri varchar(300) default null,
     server_software varchar(100) default null,
     request_method varchar(20) default null,
-    http_cookie varchar(200) default null,
+    http_cookie varchar(1000) default null,
     user_agent varchar(200) default null,
     remote_addr varchar(100) default null,
     remote_port varchar(100) default null,
@@ -68,6 +68,7 @@ create table mouse_move (
     reg_date timestamp not null default CURRENT_TIMESTAMP
 );
 
+alter table client_info modify column server_request_uri varchar(1000);
 ```
 
 ## Adicionar o middleware no *EntryPoint* do projeto. Ex:
