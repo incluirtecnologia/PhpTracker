@@ -100,7 +100,7 @@ class ClientTracker extends AbstractTracker
                 }
             }
         }
-        if(count($files) > 0){
+        if (count($files) > 0) {
             $this->uploadedFiles = implode(', ', $files);
         }
     }
@@ -114,9 +114,9 @@ class ClientTracker extends AbstractTracker
     {
         try {
             $stmt = $this->conn->prepare('INSERT INTO client_info
-            (session_id, ip, server_name, server_port, server_request_uri, server_software,
-            request_method, request_params, http_cookie, user_agent, remote_addr, remote_port,
-            session_values, uploaded_files) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+                (session_id, ip, server_name, server_port, server_request_uri, server_software,
+                request_method, request_params, http_cookie, user_agent, remote_addr, remote_port,
+                session_values, uploaded_files) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
             $stmt->execute([
                 $this->session_id,
                 $this->ip,
@@ -140,6 +140,17 @@ class ClientTracker extends AbstractTracker
             if ($this->conn->inTransaction()) {
                 $this->conn->rollBack();
             }
+        }
+
+        return false;
+    }
+
+    public static function getAllDistinctSessions()
+    {
+        $conn = DbConnection::createDbConnection();
+        $stmt = $conn->query("select distinct session_id, remote_addr from client_info");
+        if ($stmt && $sessions = $stmt->fetchAll()) {
+            return $sessions;
         }
 
         return false;

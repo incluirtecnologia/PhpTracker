@@ -38,9 +38,9 @@ class TrackerMiddleware
         }
         $clientTracker->setFiles($request->getFilesParams());
         $id = $clientTracker->save();
-        if($id) {
-          $adwordsTracker = new GoogleAdwordsTracker($id, $request->getQueryParams());
-          $adwordsTracker->save();
+        if ($id) {
+            $adwordsTracker = new GoogleAdwordsTracker($id, $request->getQueryParams());
+            $adwordsTracker->save();
         }
     }
 }

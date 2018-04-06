@@ -3,8 +3,10 @@
 
 namespace Intec\Tracker\Controller;
 
+use IntecPhp\Model\ResponseHandler;
 use Intec\Tracker\Model\DummyTracker;
 use Intec\Tracker\Model\MouseMoveTracker;
+use Intec\Tracker\Model\ClientTracker;
 use Intec\Router\Request;
 use Intec\Session\Session;
 
@@ -58,5 +60,25 @@ class TrackerController
         }
 
         echo json_encode($data);
+    }
+
+    public static function getAllDistinctSessions(Request $request)
+    {
+        try {
+            $data = ClientTracker::getAllDistinctSessions();
+            if ($data) {
+                $rp = new ResponseHandler(200, 'operação ok', [
+                    'sessions' => $data
+                ]);
+            } else {
+                $rp = new ResponseHandler(200, 'operação ok', [
+                    'sessions' => null
+                ]);
+            }
+            $rp->printJson();
+        } catch (\Exception $e) {
+            $rp = new ResponseHandler(400, $e->getMessage() . '. Código: ' . $e->getCode());
+            $rp->printJson();
+        }
     }
 }
