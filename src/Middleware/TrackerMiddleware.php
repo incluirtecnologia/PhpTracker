@@ -12,7 +12,6 @@ use Intec\Tracker\Model\GoogleAdwordsTracker;
 
 class TrackerMiddleware
 {
-
     /**
      * Used in routes to get information
     **/
