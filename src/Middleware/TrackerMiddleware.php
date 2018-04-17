@@ -12,10 +12,9 @@ use Intec\Tracker\Model\GoogleAdwordsTracker;
 
 class TrackerMiddleware
 {
-
-  /**
-  * Used in routes to get information
-  **/
+    /**
+     * Used in routes to get information
+    **/
     public function __construct()
     {
     }
@@ -29,18 +28,21 @@ class TrackerMiddleware
     public static function userTracker(Request $request)
     {
         $clientTracker = new ClientTracker();
-        // Obtendo os parametros do metodo de requisicao
-        $requestMethod = $clientTracker->getRequestMethod();
-        if ($requestMethod == 'GET') {
-            $clientTracker->setRequestParams($request->getQueryParams());
-        } else { // POST
-            $clientTracker->setRequestParams($request->getPostParams());
-        }
-        $clientTracker->setFiles($request->getFilesParams());
-        $id = $clientTracker->save();
-        if ($id) {
-            $adwordsTracker = new GoogleAdwordsTracker($id, $request->getQueryParams());
-            $adwordsTracker->save();
+        // Verificando se nao e' uma pagina de exibicao dos dados capturados com o tracker
+        if (!$clientTracker->isFromTracker()) {
+            // Obtendo os parametros do metodo de requisicao
+            $requestMethod = $clientTracker->getRequestMethod();
+            if ($requestMethod == 'GET') {
+                $clientTracker->setRequestParams($request->getQueryParams());
+            } else { // POST
+                $clientTracker->setRequestParams($request->getPostParams());
+            }
+            $clientTracker->setFiles($request->getFilesParams());
+            $id = $clientTracker->save();
+            if ($id) {
+                $adwordsTracker = new GoogleAdwordsTracker($id, $request->getQueryParams());
+                $adwordsTracker->save();
+            }
         }
     }
 }

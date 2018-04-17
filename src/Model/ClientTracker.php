@@ -23,9 +23,7 @@ class ClientTracker extends AbstractTracker
     private $uploadedFiles;
 
     const DEFAULT_SESSION_KEY = 'tracker_session';
-
     const ERR_COPY_FILE = -1;
-
     const PATH_SAVED_FILES = "vendor/intec/tracker/data/saved-files";
 
     public function __construct()
@@ -110,6 +108,12 @@ class ClientTracker extends AbstractTracker
         return $this->requestMethod;
     }
 
+    public function isFromTracker()
+    {
+        $origin = explode('/', $this->serverRequestUri)[1];
+        return $origin === 'tracker';
+    }
+
     public function save()
     {
         try {
@@ -151,6 +155,40 @@ class ClientTracker extends AbstractTracker
         $stmt = $conn->query("select distinct session_id, remote_addr from client_info");
         if ($stmt && $sessions = $stmt->fetchAll()) {
             return $sessions;
+        }
+
+        return false;
+    }
+
+    public static function filterData($column, $value)
+    {
+        $sql = "select *from client_info where ";
+        $sql .= $column . "=?";
+
+        $conn = DbConnection::createDbConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            $value,
+        ]);
+
+        if ($stmt && $filteredData = $stmt->fetchAll()) {
+            return $filteredData;
+        }
+
+        return false;
+    }
+
+    public static function getTrackedUserById($id)
+    {
+        $conn = DbConnection::createDbConnection();
+        $stmt = $conn->prepare('select *from client_info where session_values like ?');
+        $formattedId = '%' . $id . '&%';
+        $stmt->execute([
+            $formattedId,
+        ]);
+
+        if ($stmt && $trackedUser = $stmt->fetchAll()) {
+            return $trackedUser;
         }
 
         return false;
