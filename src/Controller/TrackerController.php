@@ -65,15 +65,17 @@ class TrackerController
 
     public static function getAllDistinctSessions(Request $request)
     {
+        $params = $request->getQueryParams();
+        $startAt = $params['startAt'] ?? 0;
+        $amount = $params['amount'] ?? 16;
+
         try {
-            $data = ClientTracker::getAllDistinctSessions();
+            $data = ClientTracker::getAllDistinctSessions($startAt, $amount);
             if ($data) {
-                $rp = new ResponseHandler(200, 'operação ok', [
-                    'sessions' => $data
-                ]);
+                $rp = new ResponseHandler(200, 'operação ok', $data);
             } else {
                 $rp = new ResponseHandler(200, 'operação ok', [
-                    'sessions' => null
+                    'sessions' => []
                 ]);
             }
             $rp->printJson();
@@ -86,6 +88,8 @@ class TrackerController
     public static function filterData(Request $request)
     {
         $params = $request->getPostParams();
+        $startAt = $params['startAt'] ?? 0;
+        $amount = $params['amount'] ?? 16;
 
         $iv = new InputValidator([
             'value' => [
@@ -112,24 +116,22 @@ class TrackerController
         }
 
         try {
-            $data = ClientTracker::filterData($params['column'], $params['value']);
+            $data = ClientTracker::filterData($params['column'], $params['value'], $startAt, $amount);
             if ($data) {
                 // Separacao de alguns dados e formatacao do campo data
-                for ($i = 0; $i < count($data); $i++) {
-                    $data[$i]['formatted_date'] = self::formatTimestamp($data[$i]['reg_date']);
-                    $string = $data[$i]['session_values'];
+                for ($i = 0; $i < count($data['filtered']); $i++) {
+                    $data['filtered'][$i]['formatted_date'] = self::formatTimestamp($data['filtered'][$i]['reg_date']);
+                    $string = $data['filtered'][$i]['session_values'];
                     if ($user_id = self::filterStringParam($string, 'id')) {
-                        $data[$i]['user_id'] = $user_id;
-                        $data[$i]['user_name'] = self::filterStringParam($string, 'name');
-                        $data[$i]['user_type'] = self::filterStringParam($string, 'type');
+                        $data['filtered'][$i]['user_id'] = $user_id;
+                        $data['filtered'][$i]['user_name'] = self::filterStringParam($string, 'name');
+                        $data['filtered'][$i]['user_type'] = self::filterStringParam($string, 'type');
                     }
                 }
-                $rp = new ResponseHandler(200, 'operação ok', [
-                    'filteredData' => $data
-                ]);
+                $rp = new ResponseHandler(200, 'operação ok', $data);
             } else {
                 $rp = new ResponseHandler(200, 'operação ok', [
-                    'filteredData' => null
+                    'filtered' => []
                 ]);
             }
             $rp->printJson();
@@ -161,11 +163,14 @@ class TrackerController
     public static function getTrackedUserById(Request $request)
     {
         $params = $request->getPostParams();
+        $startAt = $params['startAt'] ?? 0;
+        $amount = $params['amount'] ?? 16;
 
         $iv = new InputValidator([
             'id' => [
                 'validators' => [
-                    'IsEmptyValidator' => []
+                    'IsEmptyValidator' => [],
+                    'IsNumericValidator' => []
                 ]
             ]
         ]);
@@ -179,20 +184,16 @@ class TrackerController
         }
 
         try {
-            $data = ClientTracker::getTrackedUserById($params['id']);
+            $data = ClientTracker::getTrackedUserById($params['id'], $startAt, $amount);
             if ($data) {
-                $header = self::generateHeaderTrackedUser($data[0]['session_values']);
-
-                for ($i = 0; $i < count($data); $i++) {
-                    $data[$i]['formatted_date'] = self::formatTimestamp($data[$i]['reg_date']);
+                $data['header'] = self::generateHeaderTrackedUser($data['trackedUser'][0]['session_values']);
+                for ($i = 0; $i < count($data['trackedUser']); $i++) {
+                    $data['trackedUser'][$i]['formatted_date'] = self::formatTimestamp($data['trackedUser'][$i]['reg_date']);
                 }
-                $rp = new ResponseHandler(200, 'operação ok', [
-                    'trackedUser' => $data,
-                    'trackedHeader' => $header
-                ]);
+                $rp = new ResponseHandler(200, 'operação ok', $data);
             } else {
                 $rp = new ResponseHandler(200, 'operação ok', [
-                    'trackedUser' => null
+                    'trackedUser' => []
                 ]);
             }
             $rp->printJson();
