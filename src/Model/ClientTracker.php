@@ -149,21 +149,24 @@ class ClientTracker extends AbstractTracker
         return false;
     }
 
-    public static function getAllDistinctSessions()
+    public static function getAllDistinctSessions($startAt, $amount)
     {
         $conn = DbConnection::createDbConnection();
-        $stmt = $conn->query("select distinct session_id, remote_addr from client_info");
+        $stmt = $conn->query("select distinct session_id, remote_addr from client_info limit " . (int)$startAt .  ', ' . (int)$amount);
         if ($stmt && $sessions = $stmt->fetchAll()) {
-            return $sessions;
+            $stmt = $conn->query('select count(distinct session_id) from client_info');
+            $total = $stmt->fetch()['count(distinct session_id)'];
+
+            return ['sessions' => $sessions, 'total' => $total, 'startAt' => $startAt, 'amount' => $amount];
         }
 
         return false;
     }
 
-    public static function filterData($column, $value)
+    public static function filterData($column, $value, $startAt, $amount)
     {
-        $sql = "select *from client_info where ";
-        $sql .= $column . "=?";
+        $sql = "select *from client_info where " . $column . "=? ";
+        $sql .= "limit " . $startAt . ", " . $amount;
 
         $conn = DbConnection::createDbConnection();
         $stmt = $conn->prepare($sql);
@@ -171,24 +174,39 @@ class ClientTracker extends AbstractTracker
             $value,
         ]);
 
-        if ($stmt && $filteredData = $stmt->fetchAll()) {
-            return $filteredData;
+        if ($stmt && $filtered = $stmt->fetchAll()) {
+            $sql = "select count(*) from client_info where ";
+            $sql .= $column . "=?";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([
+                $value,
+            ]);
+            $total = $stmt->fetch()['count(*)'];
+
+            return ['filtered' => $filtered, 'total' => $total, 'startAt' => $startAt, 'amount' => $amount];
         }
 
         return false;
     }
 
-    public static function getTrackedUserById($id)
+    public static function getTrackedUserById($id, $startAt, $amount)
     {
         $conn = DbConnection::createDbConnection();
-        $stmt = $conn->prepare('select *from client_info where session_values like ?');
+        $stmt = $conn->prepare('select *from client_info where session_values like ? limit ' . $startAt .  ', ' . $amount);
         $formattedId = '%' . $id . '&%';
         $stmt->execute([
             $formattedId,
         ]);
 
         if ($stmt && $trackedUser = $stmt->fetchAll()) {
-            return $trackedUser;
+            $stmt = $conn->prepare('select count(*) from client_info where session_values like ?');
+            $stmt->execute([
+                $formattedId,
+            ]);
+            $total = $stmt->fetch()['count(*)'];
+
+            return ['trackedUser' => $trackedUser, 'total' => $total, 'startAt' => $startAt, 'amount' => $amount];
         }
 
         return false;
